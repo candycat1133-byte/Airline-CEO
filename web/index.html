@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Disconnect SMP | Rules</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#111b2e;
+      --panel2:#0f1730;
+      --text:#e8eefc;
+      --muted:#a9b7da;
+      --accent:#6ee7ff;
+      --accent2:#a78bfa;
+      --warn:#ffcc66;
+      --bad:#ff6b6b;
+      --good:#7dffb2;
+      --border:rgba(255,255,255,.08);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1100px 700px at 20% -10%, rgba(110,231,255,.18), transparent 55%),
+                  radial-gradient(900px 600px at 95% 10%, rgba(167,139,250,.16), transparent 55%),
+                  linear-gradient(180deg, var(--bg), #060a14 70%);
+      color:var(--text);
+    }
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    header{
+      display:flex; gap:16px; align-items:center; justify-content:space-between;
+      padding:18px 18px; border:1px solid var(--border); border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+    }
+    .brand{display:flex; align-items:center; gap:14px}
+    .logo{
+      width:46px;height:46px;border-radius:14px;
+      background:conic-gradient(from 180deg, var(--accent), var(--accent2), var(--accent));
+      filter:saturate(1.1);
+      box-shadow:0 10px 30px rgba(110,231,255,.15);
+    }
+    .title{line-height:1.1}
+    h1{margin:0;font-size:20px}
+    .subtitle{margin:4px 0 0;color:var(--muted);font-size:13px}
+    .topbtns{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .btn{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      text-decoration:none;
+      font-weight:600;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+    }
+    .btn:hover{background:rgba(255,255,255,.07)}
+    .btn.primary{
+      background:linear-gradient(90deg, rgba(110,231,255,.18), rgba(167,139,250,.18));
+      border-color:rgba(110,231,255,.25);
+    }
+
+    .grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap:16px;
+      align-items:start;
+    }
+    @media (max-width: 900px){ .grid{grid-template-columns:1fr} }
+
+    .card{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+    }
+    .card h2{margin:0 0 10px;font-size:16px}
+    .muted{color:var(--muted);font-size:13px;line-height:1.45}
+    .pillrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .pill{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+    }
+
+    .search{
+      display:flex; gap:10px; align-items:center; margin:12px 0 14px;
+    }
+    input[type="text"], select, textarea{
+      width:100%;
+      padding:11px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:rgba(10,14,30,.55);
+      color:var(--text);
+      outline:none;
+    }
+    input[type="text"]:focus, textarea:focus{border-color:rgba(110,231,255,.35)}
+    .rulelist{display:flex; flex-direction:column; gap:10px}
+    .rule{
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+    }
+    .ruleTop{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+    }
+    .ruleTitle{font-weight:800}
+    .tag{
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .tag.warn{border-color:rgba(255,204,102,.35); color:#ffd89a}
+    .tag.bad{border-color:rgba(255,107,107,.35); color:#ffb0b0}
+    .tag.good{border-color:rgba(125,255,178,.35); color:#b9ffd3}
+    .ruleBody{margin-top:6px;color:var(--muted);font-size:13px;line-height:1.45}
+    .footer{margin:18px 0 0; color:var(--muted); font-size:12px; text-align:center}
+    .small{font-size:12px;color:var(--muted)}
+    .divider{height:1px;background:var(--border);margin:12px 0}
+    .staffList{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+    .staff{display:flex;justify-content:space-between;gap:10px;padding:10px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.03)}
+    .staff b{font-weight:800}
+    .k{
+      display:inline-block;
+      font-size:11px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="title">
+          <h1>Disconnect SMP</h1>
+          <div class="subtitle">Rules, info, and how not to start a Minecraft legal drama 🧑‍⚖️⛏️</div>
+        </div>
+      </div>
+
+      <div class="topbtns">
+        <a class="btn primary" href="#rules">📜 Rules</a>
+        <a class="btn" href="#info">🗺️ Server Info</a>
+        <a class="btn" href="#report">🧾 Report</a>
+        <a class="btn" href="airline.html">Airline Game</a>
+        <a class="btn" id="discordBtn" href="#" target="_blank" rel="noreferrer">💬 Discord</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main class="card" id="rules">
+        <h2>Rules</h2>
+        <div class="muted">Search or filter. If you can read this, you can avoid getting banned. Powerful magic.</div>
+
+        <div class="search">
+          <input id="searchBox" type="text" placeholder="Search rules (ex: griefing, stealing, PVP)..." />
+          <select id="filterBox" style="max-width:210px">
+            <option value="all">All categories</option>
+            <option value="fairplay">Fair Play</option>
+            <option value="pvp">PVP</option>
+            <option value="builds">Builds</option>
+            <option value="chat">Chat</option>
+            <option value="economy">Economy</option>
+            <option value="technical">Technical</option>
+          </select>
+        </div>
+
+        <div class="rulelist" id="ruleList"></div>
+
+        <div class="divider"></div>
+        <div class="small">
+          Enforcement is based on context. If something is clearly being done to ruin the server, staff can act even if it is not written word-for-word here.
+        </div>
+      </main>
+
+      <aside class="card" id="info">
+        <h2>Server Info</h2>
+        <div class="muted">
+          Keep this section updated so new players do not have to ask the same 12 questions.
+        </div>
+
+        <div class="pillrow">
+          <span class="pill" id="versionPill">Version: 1.21.11</span>
+          <span class="pill" id="modePill">Mode: Survival</span>
+          <span class="pill" id="regionPill">Region: US</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="muted"><b>IP:</b> <span id="ipText">disconenctsmp.aternos.me</span></div>
+        <div class="muted"><b>Whitelist:</b> <span id="whitelistText">Yes</span></div>
+        <div class="muted"><b>Seed:</b> <span id="seedText">I'm not telling you</span></div>
+
+        <div class="divider"></div>
+
+        <h2 style="margin-top:0">Staff</h2>
+        <div class="muted">Edit these names in the page settings.</div>
+        <div class="staffList" id="staffList"></div>
+
+        <div class="divider"></div>
+
+        <h2 id="report" style="margin-top:0">Report an issue</h2>
+        <div class="muted">This opens an email draft. No login, no database, no drama.</div>
+
+        <form id="reportForm">
+          <div style="display:flex;gap:10px;margin-top:10px">
+            <input id="reportUser" type="text" placeholder="Your Minecraft username" />
+            <input id="reportWho" type="text" placeholder="Who is it about" />
+          </div>
+          <div style="margin-top:10px">
+            <input id="reportWhen" type="text" placeholder="When did it happen? (date/time)" />
+          </div>
+          <div style="margin-top:10px">
+            <textarea id="reportWhat" rows="4" placeholder="What happened? Include coords, screenshots, etc."></textarea>
+          </div>
+          <button class="btn primary" type="submit" style="width:100%;justify-content:center;margin-top:10px">
+            📧 Create report email
+          </button>
+          <div class="small" style="margin-top:10px">
+            Tip: Include coords like <span class="k">x 120 y 64 z -300</span> and what was taken/broken.
+          </div>
+        </form>
+      </aside>
+    </div>
+
+    <div class="footer">
+      Disconnect SMP · Built by Ty · Last updated <span id="lastUpdated"></span>
+    </div>
+  </div>
+
+  <script>
+    // ====== EDIT THESE SETTINGS ======
+    const SETTINGS = {
+      serverName: "Disconnect SMP",
+      discordInvite: "https://discord.gg/BJqPR34x4F",
+      version: "1.21.11",
+      mode: "Survival",
+      region: "US",
+      ip: "disconenctsmp.aternos.me",
+      whitelist: "Yes",
+      seed: "I'm not telling you",
+      reportEmailTo: "williamst7@go.lisd.net",
+      staff: [
+        { name: "candycat1133", role: "Owner" },
+      ],
+      rules: [
+        // Fair Play
+        { cat:"fairplay", title:"Griefing is allowed", tag:"Good", tagType:"good",
+          text:"Destroy anything its an anarchy server" },
+        { cat:"fairplay", title:"Stealing is allowed", tag:"Good", tagType:"Good",
+          text:"Steal whatever you want, but your teammates might get mad if you steal from them" },
+        { cat:"fairplay", title:"No hacks or unfair mods", tag:"Severe", tagType:"bad",
+          text:"No X-ray, kill aura, fly, auto clickers, etc. Performance mods are ok. Ask staff if unsure." },
+
+        // PVP
+        { cat:"pvp", title:"PVP is allowed", tag:"Good", tagType:"good",
+          text:"Kill whoever you want" },
+        { cat:"pvp", title:"Spawn trapping is allowed with moderation", tag:"Severe", tagType:"bad",
+          text:"Spawn trapping is allowed, but do not camp people at spawn or their base to farm kills or force them off the server." },
+
+        // Builds
+        { cat:"builds", title:"Respect base space", tag:"Important", tagType:"warn",
+          text:"Do not build right next to someone’s base without asking. Give people room to expand." },
+        { cat:"builds", title:"No lag machines", tag:"Severe", tagType:"bad",
+          text:"Avoid redstone contraptions that intentionally cause lag. Big farms need an off switch." },
+
+        // Chat
+        { cat:"chat", title:"Keep chat chill", tag:"Important", tagType:"warn",
+          text:"No harassment, slurs, or targeted bullying. Jokes are only jokes if everyone is laughing." },
+        { cat:"chat", title:"No doxxing or personal info", tag:"Severe", tagType:"bad",
+          text:"Do not share anyone’s real name, address, school, phone number, or private messages." },
+
+        // Economy
+        { cat:"economy", title:"Shop honesty", tag:"Good", tagType:"good",
+          text:"If you run a shop, label prices clearly and keep it stocked. If you mess up, fix it quickly." },
+
+        // Technical
+        { cat:"technical", title:"Report bugs, do not abuse them", tag:"Important", tagType:"warn",
+          text:"If you find a dupe or exploit, tell staff. Using it to get rich will get you punished." },
+      ]
+    };
+    // ================================
+
+    document.title = `${SETTINGS.serverName} | Rules`;
+    document.querySelector("h1").textContent = SETTINGS.serverName;
+
+    // Info pills
+    document.getElementById("versionPill").textContent = `Version: ${SETTINGS.version}`;
+    document.getElementById("modePill").textContent = `Mode: ${SETTINGS.mode}`;
+    document.getElementById("regionPill").textContent = `Region: ${SETTINGS.region}`;
+    document.getElementById("ipText").textContent = SETTINGS.ip;
+    document.getElementById("whitelistText").textContent = SETTINGS.whitelist;
+    document.getElementById("seedText").textContent = SETTINGS.seed;
+
+    // Discord
+    const discordBtn = document.getElementById("discordBtn");
+    discordBtn.href = SETTINGS.discordInvite;
+
+    // Staff list
+    const staffList = document.getElementById("staffList");
+    staffList.innerHTML = "";
+    SETTINGS.staff.forEach(s => {
+      const div = document.createElement("div");
+      div.className = "staff";
+      div.innerHTML = `<div><b>${escapeHtml(s.name)}</b></div><div class="k">${escapeHtml(s.role)}</div>`;
+      staffList.appendChild(div);
+    });
+
+    // Rules render
+    const ruleList = document.getElementById("ruleList");
+    const searchBox = document.getElementById("searchBox");
+    const filterBox = document.getElementById("filterBox");
+
+    function renderRules(){
+      const q = searchBox.value.trim().toLowerCase();
+      const cat = filterBox.value;
+
+      const filtered = SETTINGS.rules.filter(r => {
+        const matchesCat = (cat === "all") || (r.cat === cat);
+        const blob = (r.title + " " + r.text + " " + r.cat).toLowerCase();
+        const matchesSearch = q === "" || blob.includes(q);
+        return matchesCat && matchesSearch;
+      });
+
+      ruleList.innerHTML = "";
+      if(filtered.length === 0){
+        const empty = document.createElement("div");
+        empty.className = "muted";
+        empty.textContent = "No rules match that search.";
+        ruleList.appendChild(empty);
+        return;
+      }
+
+      filtered.forEach(r => {
+        const div = document.createElement("div");
+        div.className = "rule";
+        const tagClass = r.tagType ? `tag ${r.tagType}` : "tag";
+        div.innerHTML = `
+          <div class="ruleTop">
+            <div class="ruleTitle">${escapeHtml(r.title)}</div>
+            <div class="${tagClass}">${escapeHtml(r.tag || "")}</div>
+          </div>
+          <div class="ruleBody">${escapeHtml(r.text)}</div>
+        `;
+        ruleList.appendChild(div);
+      });
+    }
+
+    searchBox.addEventListener("input", renderRules);
+    filterBox.addEventListener("change", renderRules);
+    renderRules();
+
+    // Report form -> mailto
+    document.getElementById("reportForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const user = document.getElementById("reportUser").value.trim();
+      const who  = document.getElementById("reportWho").value.trim();
+      const when = document.getElementById("reportWhen").value.trim();
+      const what = document.getElementById("reportWhat").value.trim();
+
+      const subject = `[${SETTINGS.serverName}] Player Report: ${who || "Unknown"}`;
+      const body =
+`Reporter: ${user || "Unknown"}
+Reported player: ${who || "Unknown"}
+When: ${when || "Unknown"}
+
+What happened:
+${what || "(Describe what happened here)"}
+
+Evidence:
+- Screenshots/video:
+- Coords:
+- Items affected:
+`;
+
+      const mailto = `mailto:${encodeURIComponent(SETTINGS.reportEmailTo)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailto;
+    });
+
+    // Footer date
+    document.getElementById("lastUpdated").textContent =
+      new Date().toLocaleDateString(undefined, { year:"numeric", month:"long", day:"numeric" });
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #result { margin-top: 20px; font-size: 1.2em; }
+    </style>
+</head>
+<body>
+    <h1>Guess the Number Game</h1>
+    <p>Guess the number between 1 and 100:</p>
+    <input type="number" id="guess" placeholder="Enter your guess">
+    <button onclick="checkGuess()">Submit Guess</button>
+    <p id="result"></p>
+    <button onclick="resetGame()">Play Again</button>
+
+    <script>
+        let number = Math.floor(Math.random() * 100) + 1;  // random number between 1-100
+        let attempts = 0;
+
+        function checkGuess() {
+            let guess = parseInt(document.getElementById("guess").value);
+            attempts++;
+
+            let result = document.getElementById("result");
+
+            if (guess < number) {
+                result.textContent = "too low!";
+            } else if (guess > number) {
+                result.textContent = "too high!";
+            } else {
+                result.textContent = `you got it! the number was ${number}. it took you ${attempts} tries`;
+            }
+        }
+
+        function resetGame() {
+            number = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            document.getElementById("result").textContent = "";
+            document.getElementById("guess").value = "";
+        }
+    </script>
+</body>
+</html>

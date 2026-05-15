@@ -1,0 +1,16 @@
+node_modules/
+.tools/
+playwright-report/
+test-results/
+
+# Local/archived bot experiments may contain private credentials.
+archive/
+bots/
+experiments/
+pyproject.toml
+poetry.lock
+
+# Never commit local secrets.
+.env
+.env.*
+*.secret

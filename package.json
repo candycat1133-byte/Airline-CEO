@@ -1,0 +1,28 @@
+{
+  "name": "hello-bot",
+  "version": "1.0.0",
+  "description": "Airline CEO browser airline management game prototype",
+  "main": "index.js",
+  "scripts": {
+    "dev": "python3 -m http.server 8001 --directory web",
+    "check:js": "node --check web/airline-ceo/main.js && node --check web/airline-ceo/ui/dashboard.js && node --check web/airline-ceo/systems/economy.js",
+    "format": "prettier --write web/airline.html \"web/airline-ceo/**/*.{css,js}\"",
+    "format:check": "prettier --check web/airline.html \"web/airline-ceo/**/*.{css,js}\"",
+    "test": "bash scripts/test-playwright.sh",
+    "test:ci": "playwright test"
+  },
+  "keywords": [
+    "airline",
+    "tycoon",
+    "browser-game",
+    "management-sim"
+  ],
+  "author": "Ty",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "eslint": "^10.3.0",
+    "prettier": "^3.8.3"
+  }
+}
