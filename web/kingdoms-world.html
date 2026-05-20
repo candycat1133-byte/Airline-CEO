@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Kingdoms World</title>
+    <meta
+      name="description"
+      content="An interactive archive of kingdoms, wars, ruins, legends, and strange civilizations."
+    />
+    <link rel="stylesheet" href="kingdoms-world/styles.css" />
+  </head>
+  <body>
+    <div class="site-shell" id="top">
+      <header class="topbar" aria-label="Primary navigation">
+        <a class="brand" href="#home" aria-label="Kingdoms World home">
+          <span class="brand-mark" aria-hidden="true">KW</span>
+          <span>
+            <strong>Kingdoms World</strong>
+            <small>World archive</small>
+          </span>
+        </a>
+        <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="siteNav">
+          Menu
+        </button>
+        <nav class="site-nav" id="siteNav">
+          <a href="#home">Home</a>
+          <a href="#timeline">Timeline</a>
+          <a href="#kingdoms">Kingdoms</a>
+          <a href="#news">News</a>
+          <a href="#messenger">Messenger</a>
+          <a href="#map">Map</a>
+          <a href="#credits">Credits / Notes</a>
+        </nav>
+        <label class="archive-switch">
+          <input type="checkbox" id="archiveMode" />
+          <span>Archive Mode</span>
+        </label>
+      </header>
+
+      <main>
+        <section class="hero section-pad" id="home">
+          <div class="map-backdrop" aria-hidden="true">
+            <span class="map-line line-a"></span>
+            <span class="map-line line-b"></span>
+            <span class="map-dot dot-a"></span>
+            <span class="map-dot dot-b"></span>
+            <span class="map-dot dot-c"></span>
+          </div>
+          <div class="hero-content">
+            <p class="eyebrow">Lore vault / present day 2025</p>
+            <h1>Kingdoms World</h1>
+            <p class="hero-subtitle">
+              An interactive archive of kingdoms, wars, ruins, legends, and strange civilizations.
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="#kingdoms">Explore Kingdoms</a>
+              <a class="button" href="#timeline">View Timeline</a>
+              <a class="button" href="#news">Open News Board</a>
+            </div>
+          </div>
+          <aside class="overview-card" aria-label="World overview">
+            <span class="card-kicker">Quick Overview</span>
+            <div class="overview-grid">
+              <div><strong>6</strong><span>major kingdoms/factions</span></div>
+              <div><strong>2025</strong><span>present day</span></div>
+            </div>
+            <p>
+              Main themes: dragons, dinosaurs, sculk, waterbending, steampunk machines,
+              and ancient empires.
+            </p>
+          </aside>
+        </section>
+
+        <section class="section-pad split-heading" id="timeline">
+          <div>
+            <p class="eyebrow">Recorded events</p>
+            <h2>World Timeline</h2>
+          </div>
+          <p>
+            Expand each event to leave room for future evidence, dates, corrections, and dramatic
+            arguments between historians.
+          </p>
+        </section>
+        <section class="timeline-wrap" id="timelineList" aria-label="Kingdoms World timeline"></section>
+
+        <section class="section-pad kingdoms-section" id="kingdoms">
+          <div class="split-heading">
+            <div>
+              <p class="eyebrow">Faction records</p>
+              <h2>Kingdoms</h2>
+            </div>
+            <p>
+              Search by kingdom, leader, city, region, or lore keyword. Cards and profiles are
+              generated from the data file.
+            </p>
+          </div>
+
+          <div class="toolbar">
+            <label class="search-box">
+              <span>Search archive</span>
+              <input
+                id="kingdomSearch"
+                type="search"
+                placeholder="Search Aquiloth, Katara, sculk, dragons..."
+              />
+            </label>
+            <div class="filters" id="statusFilters" aria-label="Filter kingdoms by status"></div>
+          </div>
+
+          <div class="kingdom-grid" id="kingdomGrid"></div>
+          <section class="detail-panel" id="kingdomDetail" aria-live="polite"></section>
+        </section>
+
+        <section class="section-pad board-section" id="news">
+          <div class="split-heading">
+            <div>
+              <p class="eyebrow">Parchment reports</p>
+              <h2>Kingdoms News</h2>
+            </div>
+            <p>Short official notices from the least messy corner of the archive.</p>
+          </div>
+          <div class="notice-board" id="newsBoard"></div>
+        </section>
+
+        <section class="section-pad messenger-section" id="messenger">
+          <div class="split-heading">
+            <div>
+              <p class="eyebrow">In-world posts</p>
+              <h2>Kingdoms Messenger</h2>
+            </div>
+            <p>Some messages were moderated by the Kingdoms World archive.</p>
+          </div>
+          <div class="message-grid" id="messageBoard"></div>
+        </section>
+
+        <section class="section-pad map-section" id="map">
+          <div class="split-heading">
+            <div>
+              <p class="eyebrow">Placeholder geography</p>
+              <h2>Interactive Map</h2>
+            </div>
+            <p>Hover or tap a region marker to see who controls the territory.</p>
+          </div>
+          <div class="fantasy-map" id="fantasyMap" aria-label="Clickable fantasy world map"></div>
+        </section>
+
+        <section class="section-pad credits" id="credits">
+          <p class="eyebrow">Credits / Notes</p>
+          <h2>Archive Notes</h2>
+          <div class="credits-grid">
+            <article>
+              <h3>Source Handling</h3>
+              <p>
+                The original kingdom names, leaders, stats, and lore ideas are preserved with light
+                spelling and grammar cleanup. Chaotic lore remains intentionally chaotic.
+              </p>
+            </article>
+            <article>
+              <h3>Art Direction</h3>
+              <p>
+                This site uses CSS gradients, faction colors, badges, and custom fantasy symbols.
+                It does not use official Minecraft assets, logos, or copyrighted art.
+              </p>
+            </article>
+            <article>
+              <h3>Expansion</h3>
+              <p>
+                Add more kingdoms in <code>web/kingdoms-world/data.js</code>. The cards, search,
+                profile panels, and map controls will follow the same structure.
+              </p>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="kingdoms-world/main.js"></script>
+  </body>
+</html>
